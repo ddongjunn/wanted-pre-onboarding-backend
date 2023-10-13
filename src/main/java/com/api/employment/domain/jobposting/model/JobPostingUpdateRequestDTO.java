@@ -1,4 +1,4 @@
-package com.api.employment.domain.employment.model;
+package com.api.employment.domain.jobposting.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;

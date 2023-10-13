@@ -1,6 +1,6 @@
-package com.api.employment.domain.employment.entity;
+package com.api.employment.domain.jobposting.entity;
 
-import com.api.employment.global.common.domain.BaseTimeEntity;
+import com.api.employment.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

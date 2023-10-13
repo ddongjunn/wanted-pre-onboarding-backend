@@ -1,6 +1,6 @@
-package com.api.employment.domain.employment.model;
+package com.api.employment.domain.jobposting.model;
 
-import com.api.employment.domain.employment.entity.JobPosting;
+import com.api.employment.domain.jobposting.entity.JobPosting;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

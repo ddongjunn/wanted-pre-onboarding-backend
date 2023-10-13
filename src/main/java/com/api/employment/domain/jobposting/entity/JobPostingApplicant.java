@@ -1,25 +1,22 @@
-package com.api.employment.domain.member.entity;
+package com.api.employment.domain.jobposting.entity;
 
 import com.api.employment.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseTimeEntity {
+public class JobPostingApplicant extends BaseTimeEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @NotNull
-    private String password;
+    private Long jobPostingId;
 
-    @NotNull
-    private String name;
-
+    private String memberId;
 }

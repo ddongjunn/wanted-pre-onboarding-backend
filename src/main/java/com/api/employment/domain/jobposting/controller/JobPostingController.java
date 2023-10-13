@@ -1,8 +1,8 @@
-package com.api.employment.domain.employment.controller;
+package com.api.employment.domain.jobposting.controller;
 
-import com.api.employment.domain.employment.model.JobPostingSaveRequestDTO;
-import com.api.employment.domain.employment.model.JobPostingUpdateRequestDTO;
-import com.api.employment.domain.employment.service.JobPostingService;
+import com.api.employment.domain.jobposting.model.JobPostingSaveRequestDTO;
+import com.api.employment.domain.jobposting.model.JobPostingUpdateRequestDTO;
+import com.api.employment.domain.jobposting.service.JobPostingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
