@@ -21,9 +21,6 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
 
     public CompanyResponseDTO save(CompanySaveRequestDTO companySaveRequestDTO) {
-
-        log.info("companySaveRequestDTO.getName() {}",companySaveRequestDTO.getName());
-
         if(companyRepository.existsByCompanyName(companySaveRequestDTO.getName())){
             throw new CustomException(ErrorCode.EXISTING_COMPANY_ERROR);
         }

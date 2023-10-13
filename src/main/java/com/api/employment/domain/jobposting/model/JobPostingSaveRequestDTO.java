@@ -33,7 +33,6 @@ public class JobPostingSaveRequestDTO {
 
     public JobPosting toEntity(){
         return JobPosting.builder()
-                .companyId(this.companyId)
                 .jobPosition(this.jobPosition)
                 .compensation(this.compensation)
                 .jobDetail(this.jobDetail)

@@ -1,5 +1,6 @@
 package com.api.employment.domain.jobposting.entity;
 
+import com.api.employment.domain.company.entity.Company;
 import com.api.employment.global.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -11,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class JobPosting extends BaseTimeEntity {
 
     @Builder
-    public JobPosting(Long companyId, String jobPosition, int compensation, String jobDetail, String technologiesUsed) {
-        this.companyId = companyId;
+    public JobPosting(Company company, String jobPosition, int compensation, String jobDetail, String technologiesUsed) {
+        this.company = company;
         this.jobPosition = jobPosition;
         this.compensation = compensation;
         this.jobDetail = jobDetail;
@@ -23,7 +24,9 @@ public class JobPosting extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long companyId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COMPANY_ID")
+    private Company company;
 
     private String jobPosition;
 
@@ -38,5 +41,9 @@ public class JobPosting extends BaseTimeEntity {
         this.compensation = compensation;
         this.jobDetail = jobDetail;
         this.technologiesUsed = technologiesUsed;
+    }
+
+    public void linkCompany(Company company){
+        this.company = company;
     }
 }
