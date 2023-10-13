@@ -23,6 +23,4 @@ public class Company extends BaseTimeEntity {
     private Long id;
 
     private String companyName;
-
-
 }
