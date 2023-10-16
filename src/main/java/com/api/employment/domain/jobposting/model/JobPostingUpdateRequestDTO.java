@@ -9,8 +9,8 @@ import lombok.Data;
 public class JobPostingUpdateRequestDTO {
 
     @NotNull(message = "회사 id는 필수입니다.")
-    @JsonProperty("회사_id")
-    private Long companyId;
+    @JsonProperty("채용공고_id")
+    private Long jobPostingId;
 
     @JsonProperty("채용포지션")
     private String jobPosition;

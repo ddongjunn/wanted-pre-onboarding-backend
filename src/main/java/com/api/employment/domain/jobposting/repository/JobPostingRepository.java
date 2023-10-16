@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface JobPostingRepository extends JpaRepository<JobPosting, Long> {
-    Optional<JobPosting> findJobPostingByCompanyId(Long id);
 }

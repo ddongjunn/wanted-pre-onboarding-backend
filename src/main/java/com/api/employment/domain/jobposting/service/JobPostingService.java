@@ -35,10 +35,9 @@ public class JobPostingService {
         return new JobPostingResponseDTO(SuccesCode.SAVE_SUCCESSFUL.getMessage());
     }
 
-    //TO DO 채용공고 ID로 수정해야함
     @Transactional
     public JobPostingResponseDTO update(JobPostingUpdateRequestDTO jobPostingUpdateRequestDTO){
-        JobPosting jobPosting = jobPostingRepository.findJobPostingByCompanyId(jobPostingUpdateRequestDTO.getCompanyId())
+        JobPosting jobPosting = jobPostingRepository.findById(jobPostingUpdateRequestDTO.getJobPostingId())
                 .orElseThrow(() -> new CustomException(ErrorCode.COMPANY_ID_NOT_FOUND));
 
         jobPosting.update(jobPostingUpdateRequestDTO.getJobPosition(), jobPostingUpdateRequestDTO.getCompensation(), jobPostingUpdateRequestDTO.getJobDetail(), jobPostingUpdateRequestDTO.getTechnologiesUsed());
