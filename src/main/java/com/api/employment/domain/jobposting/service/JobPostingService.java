@@ -52,7 +52,18 @@ public class JobPostingService {
     }
 
     public List<JobPostingGetResponseDTO> get(String search) {
-        List<JobPostingGetResponseDTO> jobPostingWithKeyword = jobPostingRepository.findJobPostingWithKeyword(search);
-        return jobPostingWithKeyword;
+        return jobPostingRepository.findJobPostingWithKeyword(search);
+    }
+
+    public JobPostingGetDetailResponseDTO getDetail(Long id) {
+        jobPostingRepository.findById(id)
+                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
+
+        JobPostingGetDetailResponseDTO jobPostingGetDetailResponseDTO = jobPostingRepository.findJobPostingDetail(id);
+
+        String companyName = jobPostingGetDetailResponseDTO.getCompanyName();
+        jobPostingGetDetailResponseDTO.setOtherJobPostingsIdByCompany(jobPostingRepository.findIdJobPostingByCompanyId(companyName));
+
+        return jobPostingGetDetailResponseDTO;
     }
 }

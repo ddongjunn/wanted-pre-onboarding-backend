@@ -29,6 +29,11 @@ public class JobPostingController {
         return ResponseEntity.ok().body(jobPostingService.get(search));
     }
 
+    @GetMapping("detail")
+    public ResponseEntity<?> getJobPostingDetail(@RequestParam final Long id){
+        return ResponseEntity.ok().body(jobPostingService.getDetail(id));
+    }
+
     @PatchMapping
     public ResponseEntity<?> updateJobPosting(@Valid @RequestBody final JobPostingUpdateRequestDTO jobPostingUpdateRequestDTO){
         return ResponseEntity.ok().body(jobPostingService.update(jobPostingUpdateRequestDTO));
