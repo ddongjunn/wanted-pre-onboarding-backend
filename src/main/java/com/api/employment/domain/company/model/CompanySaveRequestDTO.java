@@ -12,7 +12,16 @@ public class CompanySaveRequestDTO {
     @JsonProperty("회사이름")
     private String name;
 
+    @JsonProperty("지역")
+    private String region;
+
+    @JsonProperty("국가")
+    private String country;
+
     public Company toEntity(){
-        return Company.builder().companyName(this.name).build();
+        return Company.builder().
+                companyName(this.name)
+                .region(this.region)
+                .country(this.country).build();
     }
 }

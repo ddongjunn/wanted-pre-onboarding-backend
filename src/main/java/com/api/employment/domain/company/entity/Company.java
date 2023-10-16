@@ -14,8 +14,10 @@ import lombok.NoArgsConstructor;
 public class Company extends BaseTimeEntity {
 
     @Builder
-    public Company(String companyName){
+    public Company(String companyName, String region, String country){
         this.companyName = companyName;
+        this.region = region;
+        this.country = country;
     }
 
     @Id
@@ -23,4 +25,8 @@ public class Company extends BaseTimeEntity {
     private Long id;
 
     private String companyName;
+
+    private String region;
+
+    private String country;
 }

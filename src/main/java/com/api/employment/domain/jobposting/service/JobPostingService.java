@@ -5,17 +5,17 @@ import com.api.employment.domain.common.error.exception.CustomException;
 import com.api.employment.domain.company.entity.Company;
 import com.api.employment.domain.company.repository.CompanyRepository;
 import com.api.employment.domain.jobposting.entity.JobPosting;
-import com.api.employment.domain.jobposting.model.JobPostingDeleteRequestDTO;
-import com.api.employment.domain.jobposting.model.JobPostingSaveRequestDTO;
-import com.api.employment.domain.jobposting.model.JobPostingResponseDTO;
-import com.api.employment.domain.jobposting.model.JobPostingUpdateRequestDTO;
+import com.api.employment.domain.jobposting.model.*;
 import com.api.employment.domain.jobposting.repository.JobPostingRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.api.employment.domain.common.error.ErrorCode;
 
+import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class JobPostingService {
@@ -38,7 +38,7 @@ public class JobPostingService {
     @Transactional
     public JobPostingResponseDTO update(JobPostingUpdateRequestDTO jobPostingUpdateRequestDTO){
         JobPosting jobPosting = jobPostingRepository.findById(jobPostingUpdateRequestDTO.getJobPostingId())
-                .orElseThrow(() -> new CustomException(ErrorCode.COMPANY_ID_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
 
         jobPosting.update(jobPostingUpdateRequestDTO.getJobPosition(), jobPostingUpdateRequestDTO.getCompensation(), jobPostingUpdateRequestDTO.getJobDetail(), jobPostingUpdateRequestDTO.getTechnologiesUsed());
         return new JobPostingResponseDTO(SuccesCode.UPDATE_SUCCESSFUL.getMessage());
@@ -49,5 +49,10 @@ public class JobPostingService {
                 .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
         jobPostingRepository.delete(jobPosting);
         return new JobPostingResponseDTO(SuccesCode.DELETE_SUCCESSFUL.getMessage());
+    }
+
+    public List<JobPostingGetResponseDTO> get(String search) {
+        List<JobPostingGetResponseDTO> jobPostingWithKeyword = jobPostingRepository.findJobPostingWithKeyword(search);
+        return jobPostingWithKeyword;
     }
 }
