@@ -1,6 +1,6 @@
 package com.api.employment.domain.member.entity;
 
-import com.api.employment.global.common.entity.BaseTimeEntity;
+import com.api.employment.common.entity.BaseTimeEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

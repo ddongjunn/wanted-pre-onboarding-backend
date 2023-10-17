@@ -1,11 +1,10 @@
 package com.api.employment.domain.jobposting.service;
 
-import com.api.employment.domain.common.error.SuccesCode;
-import com.api.employment.domain.common.error.exception.CustomException;
+import com.api.employment.common.error.SuccesCode;
+import com.api.employment.common.error.exception.CustomException;
 import com.api.employment.domain.company.entity.Company;
 import com.api.employment.domain.company.repository.CompanyRepository;
 import com.api.employment.domain.jobposting.entity.JobPosting;
-import com.api.employment.domain.jobposting.entity.JobPostingApplicant;
 import com.api.employment.domain.jobposting.model.*;
 import com.api.employment.domain.jobposting.repository.JobPostingApplicantRepository;
 import com.api.employment.domain.jobposting.repository.JobPostingRepository;
@@ -15,10 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.api.employment.domain.common.error.ErrorCode;
+import com.api.employment.common.error.ErrorCode;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -73,7 +71,7 @@ public class JobPostingService {
 
         String companyName = jobPostingGetDetailResponseDTO.getCompanyName();
         jobPostingGetDetailResponseDTO.setOtherJobPostingsIdByCompany(jobPostingRepository.findIdJobPostingByCompanyId(companyName));
-        
+
         return jobPostingGetDetailResponseDTO;
     }
 

@@ -1,7 +1,7 @@
-package com.api.employment.global.error;
+package com.api.employment.common.error.exception;
 
-import com.api.employment.global.common.domain.ErrorMessage;
-import com.api.employment.domain.common.error.exception.CustomException;
+import com.api.employment.common.error.domain.ErrorMessage;
+import com.api.employment.common.error.exception.CustomException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

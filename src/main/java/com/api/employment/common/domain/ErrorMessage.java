@@ -1,4 +1,4 @@
-package com.api.employment.global.common.domain;
+package com.api.employment.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

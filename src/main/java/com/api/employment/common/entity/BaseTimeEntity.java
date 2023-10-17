@@ -1,4 +1,4 @@
-package com.api.employment.global.common.entity;
+package com.api.employment.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

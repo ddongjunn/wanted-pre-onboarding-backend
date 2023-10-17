@@ -1,4 +1,4 @@
-package com.api.employment.domain.common.error;
+package com.api.employment.common.error;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
