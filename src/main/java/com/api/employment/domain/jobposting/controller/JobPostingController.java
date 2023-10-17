@@ -1,5 +1,6 @@
 package com.api.employment.domain.jobposting.controller;
 
+import com.api.employment.domain.jobposting.model.JobPostingApplyRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingDeleteRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingSaveRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingUpdateRequestDTO;
@@ -45,7 +46,7 @@ public class JobPostingController {
     }
 
     @PostMapping("apply")
-    public ResponseEntity<?> applyJob(){
-        return ResponseEntity.ok().body("");
+    public ResponseEntity<?> applyJobPosting(@Valid @RequestBody JobPostingApplyRequestDTO jobPostingApplyRequestDTO){
+        return ResponseEntity.ok().body(jobPostingService.applyJobPosting(jobPostingApplyRequestDTO));
     }
 }

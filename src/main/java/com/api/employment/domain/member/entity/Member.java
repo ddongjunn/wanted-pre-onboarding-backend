@@ -14,7 +14,11 @@ import lombok.NoArgsConstructor;
 public class Member extends BaseTimeEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    private String logonId;
 
     @NotNull
     private String password;

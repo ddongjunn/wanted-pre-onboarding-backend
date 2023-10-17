@@ -1,22 +1,29 @@
 package com.api.employment.domain.jobposting.entity;
 
+import com.api.employment.domain.member.entity.Member;
 import com.api.employment.global.common.entity.BaseTimeEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class JobPostingApplicant extends BaseTimeEntity {
 
+    @Builder
+    public JobPostingApplicant(JobPosting jobPosting, Member member){
+        this.jobPosting = jobPosting;
+        this.member = member;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long jobPostingId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private JobPosting jobPosting;
 
-    private String memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
 }

@@ -5,8 +5,12 @@ import com.api.employment.domain.common.error.exception.CustomException;
 import com.api.employment.domain.company.entity.Company;
 import com.api.employment.domain.company.repository.CompanyRepository;
 import com.api.employment.domain.jobposting.entity.JobPosting;
+import com.api.employment.domain.jobposting.entity.JobPostingApplicant;
 import com.api.employment.domain.jobposting.model.*;
+import com.api.employment.domain.jobposting.repository.JobPostingApplicantRepository;
 import com.api.employment.domain.jobposting.repository.JobPostingRepository;
+import com.api.employment.domain.member.entity.Member;
+import com.api.employment.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,14 +18,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.api.employment.domain.common.error.ErrorCode;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class JobPostingService {
 
+    private final JobPostingApplicantRepository jobPostingApplicantRepository;
     private final JobPostingRepository jobPostingRepository;
     private final CompanyRepository companyRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public JobPostingResponseDTO save(JobPostingSaveRequestDTO jobPostingSaveRequestDTO){
@@ -56,14 +63,32 @@ public class JobPostingService {
     }
 
     public JobPostingGetDetailResponseDTO getDetail(Long id) {
-        jobPostingRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
+        boolean exists = jobPostingRepository.existsById(id);
+
+        if(!exists){
+            new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND);
+        }
 
         JobPostingGetDetailResponseDTO jobPostingGetDetailResponseDTO = jobPostingRepository.findJobPostingDetail(id);
 
         String companyName = jobPostingGetDetailResponseDTO.getCompanyName();
         jobPostingGetDetailResponseDTO.setOtherJobPostingsIdByCompany(jobPostingRepository.findIdJobPostingByCompanyId(companyName));
-
+        
         return jobPostingGetDetailResponseDTO;
+    }
+
+    public JobPostingResponseDTO applyJobPosting(JobPostingApplyRequestDTO jobPostingApplyRequestDTO){
+        JobPosting jobPosting = jobPostingRepository.findById(jobPostingApplyRequestDTO.getJobPostingId())
+                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
+
+        Member member = memberRepository.findById(jobPostingApplyRequestDTO.getMemberId())
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_ID_NOT_FOUND));
+
+        if(jobPostingApplicantRepository.existsByJobPostingAndMember(jobPosting, member)){
+            throw new CustomException(ErrorCode.ALREADY_APPLIED);
+        }
+
+        jobPostingApplicantRepository.save(jobPostingApplyRequestDTO.toEntity(jobPosting, member));
+        return new JobPostingResponseDTO(SuccesCode.SAVE_SUCCESSFUL.getMessage());
     }
 }
