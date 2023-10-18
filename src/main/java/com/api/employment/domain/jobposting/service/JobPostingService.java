@@ -49,8 +49,8 @@ public class JobPostingService {
         return new JobPostingResponseDTO(SuccesCode.UPDATE_SUCCESSFUL.getMessage());
     }
 
-    public JobPostingResponseDTO delete(JobPostingDeleteRequestDTO jobPostingDeleteRequestDTO) {
-        JobPosting jobPosting = jobPostingRepository.findById(jobPostingDeleteRequestDTO.getJobPostingId())
+    public JobPostingResponseDTO delete(Long id) {
+        JobPosting jobPosting = jobPostingRepository.findById(id)
                 .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
         jobPostingRepository.delete(jobPosting);
         return new JobPostingResponseDTO(SuccesCode.DELETE_SUCCESSFUL.getMessage());

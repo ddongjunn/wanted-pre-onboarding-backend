@@ -2,7 +2,6 @@ package com.api.employment.domain.jobposting.controller;
 
 import com.api.employment.common.logging.LoggableController;
 import com.api.employment.domain.jobposting.model.JobPostingApplyRequestDTO;
-import com.api.employment.domain.jobposting.model.JobPostingDeleteRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingSaveRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingUpdateRequestDTO;
 import com.api.employment.domain.jobposting.service.JobPostingService;
@@ -40,12 +39,13 @@ public class JobPostingController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteJobPosting(@Valid @RequestBody JobPostingDeleteRequestDTO jobPostingDeleteRequestDTO){
-        return ResponseEntity.ok().body(jobPostingService.delete(jobPostingDeleteRequestDTO));
+    public ResponseEntity<?> deleteJobPosting(@RequestParam final Long id){
+        return ResponseEntity.ok().body(jobPostingService.delete(id));
     }
 
     @PostMapping("apply")
     public ResponseEntity<?> applyJobPosting(@Valid @RequestBody JobPostingApplyRequestDTO jobPostingApplyRequestDTO){
         return ResponseEntity.ok().body(jobPostingService.applyJobPosting(jobPostingApplyRequestDTO));
     }
+
 }
