@@ -123,4 +123,12 @@ POST /jobs/apply
 
 @Pointcut("@within(com.api.employment.common.logging.LoggableController)")
 private void loggableControllers(){}
- 
+----
+### 구현과정
+JobPosting service에서 jobPostingReposioty.findById() 중복코드 발생으로 repository interface default 메소드 생성
+
+```java
+default JobPosting getById(Long id){
+return this.findById(id).orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
+}
+```
