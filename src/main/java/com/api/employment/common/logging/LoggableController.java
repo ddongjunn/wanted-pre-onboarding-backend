@@ -1,2 +1,11 @@
-package com.api.employment.common.logging;public @interface loggableController {
+package com.api.employment.common.logging;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LoggableController {
 }

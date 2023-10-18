@@ -1,5 +1,6 @@
 package com.api.employment.domain.jobposting.controller;
 
+import com.api.employment.common.logging.LoggableController;
 import com.api.employment.domain.jobposting.model.JobPostingApplyRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingDeleteRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingSaveRequestDTO;
@@ -7,21 +8,19 @@ import com.api.employment.domain.jobposting.model.JobPostingUpdateRequestDTO;
 import com.api.employment.domain.jobposting.service.JobPostingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("jobs")
 @RequiredArgsConstructor
-@Slf4j
+@LoggableController
 public class JobPostingController {
 
     private final JobPostingService jobPostingService;
 
     @PostMapping
     public ResponseEntity<?> saveJobPosting(@Valid @RequestBody final JobPostingSaveRequestDTO jobPostingSaveRequestDTO){
-        log.info("JobPostingCreateRequestDTO {}", jobPostingSaveRequestDTO.toString());
         return ResponseEntity.ok().body(jobPostingService.save(jobPostingSaveRequestDTO));
     }
 

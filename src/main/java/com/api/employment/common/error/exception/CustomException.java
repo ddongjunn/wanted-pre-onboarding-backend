@@ -1,6 +1,6 @@
-package com.api.employment.domain.common.error.exception;
+package com.api.employment.common.error.exception;
 
-import com.api.employment.domain.common.error.ErrorCode;
+import com.api.employment.common.error.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

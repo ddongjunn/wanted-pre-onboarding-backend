@@ -1,5 +1,6 @@
 package com.api.employment.domain.company.controller;
 
+import com.api.employment.common.logging.LoggableController;
 import com.api.employment.domain.company.model.CompanySaveRequestDTO;
 import com.api.employment.domain.company.service.CompanyService;
 import jakarta.validation.Valid;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("company")
 @RequiredArgsConstructor
-@Slf4j
+@LoggableController
 public class CompanyController {
 
     private final CompanyService companyService;
