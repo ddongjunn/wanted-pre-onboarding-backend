@@ -8,13 +8,11 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.CodeSignature;
-import org.h2.util.json.JSONString;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +29,6 @@ public class LoggingAspect {
 
     @Around("loggableControllers()")
     public Object loggingControllers(ProceedingJoinPoint joinPoint) throws Throwable {
-        Class clazz = joinPoint.getTarget().getClass();
-
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 
         //request
