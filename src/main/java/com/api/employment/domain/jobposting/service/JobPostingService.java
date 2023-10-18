@@ -59,14 +59,14 @@ public class JobPostingService {
 
     public JobPostingGetDetailResponseDTO getDetail(Long id) {
         boolean existsJobPosting = jobPostingRepository.existsById(id);
-
         if(!existsJobPosting){
             throw new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND);
         }
 
-        JobPostingGetDetailResponseDTO  jobPostingGetDetailResponseDTO= jobPostingRepository.findJobPostingDetail(id);
+        JobPostingGetDetailResponseDTO  jobPostingGetDetailResponseDTO = jobPostingRepository.findJobPostingDetail(id);
+
         String companyName = jobPostingGetDetailResponseDTO.getCompanyName();
-        jobPostingGetDetailResponseDTO.setOtherJobPostingsIdByCompany(jobPostingRepository.findIdJobPostingByCompanyId(companyName));
+        jobPostingGetDetailResponseDTO.setOtherJobPostingsIdByCompany(getOtherJobPostingList(companyName));
 
         return jobPostingGetDetailResponseDTO;
     }
@@ -82,5 +82,9 @@ public class JobPostingService {
 
         jobPostingApplicantRepository.save(jobPostingApplyRequestDTO.toEntity(jobPosting, member));
         return new ResponseMessage(SuccesCode.SAVE_SUCCESSFUL.getMessage());
+    }
+    
+    public List<Long> getOtherJobPostingList(String companyName){
+        return jobPostingRepository.findIdJobPostingByCompanyId(companyName);
     }
 }

@@ -2,6 +2,7 @@ package com.api.employment.domain.jobposting.controller;
 
 import com.api.employment.common.logging.LoggableController;
 import com.api.employment.domain.jobposting.model.JobPostingApplyRequestDTO;
+import com.api.employment.domain.jobposting.model.JobPostingGetDetailResponseDTO;
 import com.api.employment.domain.jobposting.model.JobPostingSaveRequestDTO;
 import com.api.employment.domain.jobposting.model.JobPostingUpdateRequestDTO;
 import com.api.employment.domain.jobposting.service.JobPostingService;
