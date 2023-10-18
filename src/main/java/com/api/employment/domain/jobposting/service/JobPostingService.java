@@ -61,14 +61,13 @@ public class JobPostingService {
     }
 
     public JobPostingGetDetailResponseDTO getDetail(Long id) {
-        boolean exists = jobPostingRepository.existsById(id);
+        boolean existsJobPosting = jobPostingRepository.existsById(id);
 
-        if(!exists){
-            new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND);
+        if(!existsJobPosting){
+            throw new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND);
         }
 
-        JobPostingGetDetailResponseDTO jobPostingGetDetailResponseDTO = jobPostingRepository.findJobPostingDetail(id);
-
+        JobPostingGetDetailResponseDTO  jobPostingGetDetailResponseDTO= jobPostingRepository.findJobPostingDetail(id);
         String companyName = jobPostingGetDetailResponseDTO.getCompanyName();
         jobPostingGetDetailResponseDTO.setOtherJobPostingsIdByCompany(jobPostingRepository.findIdJobPostingByCompanyId(companyName));
 

@@ -1,13 +1,22 @@
 package com.api.employment.common.logging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.reflect.CodeSignature;
+import org.h2.util.json.JSONString;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Component
@@ -20,20 +29,37 @@ public class LoggingAspect {
     @Pointcut("@within(com.api.employment.common.logging.LoggableController)")
     private void loggableControllers(){}
 
-    @Before("loggableControllers()")
-    public void before(JoinPoint joinPoint){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        log.info("request: {} {} parameter: {}",request.getMethod(), request.getRequestURI(), joinPoint.getArgs().toString());
-    }
+    @Around("loggableControllers()")
+    public Object loggingControllers(ProceedingJoinPoint joinPoint) throws Throwable {
+        Class clazz = joinPoint.getTarget().getClass();
 
-    @AfterReturning(value = "loggableControllers()", returning = "returnObj")
-    public void after(JoinPoint joinPoint, Object returnObj) {
-        log.info("response: {}", returnObj.toString());
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+        //request
+        log.info("request: {} {}", request.getMethod(), request.getRequestURI());
+        log.info("parameters: {}", mapper.writeValueAsString(params(joinPoint))); //writerWithDefaultPrettyPrinter()
+
+        //response
+        Object response = joinPoint.proceed(joinPoint.getArgs());
+        ResponseEntity<?> responseEntity = (ResponseEntity<?>) response;
+        log.info("response: {}", mapper.writeValueAsString(responseEntity.getBody()));
+        return response;
     }
 
     @AfterThrowing(pointcut = "loggableControllers()", throwing = "e")
     public void afterThrowing(JoinPoint joinPoint, Throwable e) {
-        log.error("error {}", e.getMessage());
-        log.error("Exception at {} with cause = {}", joinPoint.getSignature().toShortString(), e.getCause() != null? e.getCause(): "NULL");
+        log.error("error: {}", e.toString());
+    }
+
+    private Map params(JoinPoint joinPoint){
+        CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
+        String[] parameterNames = codeSignature.getParameterNames();
+        Object[] args = joinPoint.getArgs();
+
+        Map<String, Object> params = new HashMap<>();
+        for(int i = 0; i < parameterNames.length; i++){
+            params.put(parameterNames[i], args[i]);
+        }
+        return params;
     }
 }
