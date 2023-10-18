@@ -1,6 +1,6 @@
 
-insert into member (logon_Id, password, name, created_date, modified_date) values('djlee', 'we13%%12', '이동준', now(), now());
-insert into member (logon_Id, password, name, created_date, modified_date) values('leedj', 'Welkq313', '준동이', now(), now());
+insert into member (id, password, name, created_date, modified_date) values('djlee', 'we13%%12', '이동준', now(), now());
+insert into member (id, password, name, created_date, modified_date) values('leedj', 'Welkq313', '준동이', now(), now());
 
 insert into company (company_name, region, country, created_date, modified_date) values('배달의민족', '판교', '한국', now(), now());
 insert into company (company_name, region, country, created_date, modified_date) values('카카오', '강남', '한국', now(), now());

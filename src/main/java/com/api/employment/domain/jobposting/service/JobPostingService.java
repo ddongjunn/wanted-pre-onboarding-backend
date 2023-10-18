@@ -1,5 +1,6 @@
 package com.api.employment.domain.jobposting.service;
 
+import com.api.employment.common.domain.ResponseMessage;
 import com.api.employment.common.error.SuccesCode;
 import com.api.employment.common.error.exception.CustomException;
 import com.api.employment.domain.company.entity.Company;
@@ -29,31 +30,27 @@ public class JobPostingService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public JobPostingResponseDTO save(JobPostingSaveRequestDTO jobPostingSaveRequestDTO){
-        Company company = companyRepository.findById(jobPostingSaveRequestDTO.getCompanyId())
-                .orElseThrow(() -> new CustomException(ErrorCode.COMPANY_ID_NOT_FOUND));
+    public ResponseMessage save(JobPostingSaveRequestDTO jobPostingSaveRequestDTO){
+        Company company = companyRepository.getById(jobPostingSaveRequestDTO.getCompanyId());
 
         JobPosting jobPosting = jobPostingSaveRequestDTO.toEntity();
         jobPosting.linkCompany(company);
         jobPostingRepository.save(jobPosting);
 
-        return new JobPostingResponseDTO(SuccesCode.SAVE_SUCCESSFUL.getMessage());
+        return new ResponseMessage(SuccesCode.SAVE_SUCCESSFUL.getMessage());
     }
 
     @Transactional
-    public JobPostingResponseDTO update(JobPostingUpdateRequestDTO jobPostingUpdateRequestDTO){
-        JobPosting jobPosting = jobPostingRepository.findById(jobPostingUpdateRequestDTO.getJobPostingId())
-                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
-
+    public ResponseMessage update(JobPostingUpdateRequestDTO jobPostingUpdateRequestDTO){
+        JobPosting jobPosting = jobPostingRepository.getById(jobPostingUpdateRequestDTO.getJobPostingId());
         jobPosting.update(jobPostingUpdateRequestDTO.getJobPosition(), jobPostingUpdateRequestDTO.getCompensation(), jobPostingUpdateRequestDTO.getJobDetail(), jobPostingUpdateRequestDTO.getTechnologiesUsed());
-        return new JobPostingResponseDTO(SuccesCode.UPDATE_SUCCESSFUL.getMessage());
+        return new ResponseMessage(SuccesCode.UPDATE_SUCCESSFUL.getMessage());
     }
 
-    public JobPostingResponseDTO delete(Long id) {
-        JobPosting jobPosting = jobPostingRepository.findById(id)
-                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
+    public ResponseMessage delete(Long id) {
+        JobPosting jobPosting = jobPostingRepository.getById(id);
         jobPostingRepository.delete(jobPosting);
-        return new JobPostingResponseDTO(SuccesCode.DELETE_SUCCESSFUL.getMessage());
+        return new ResponseMessage(SuccesCode.DELETE_SUCCESSFUL.getMessage());
     }
 
     public List<JobPostingGetResponseDTO> get(String search) {
@@ -74,18 +71,16 @@ public class JobPostingService {
         return jobPostingGetDetailResponseDTO;
     }
 
-    public JobPostingResponseDTO applyJobPosting(JobPostingApplyRequestDTO jobPostingApplyRequestDTO){
-        JobPosting jobPosting = jobPostingRepository.findById(jobPostingApplyRequestDTO.getJobPostingId())
-                .orElseThrow(() -> new CustomException(ErrorCode.JOB_POSTING_ID_NOT_FOUND));
+    public ResponseMessage applyJobPosting(JobPostingApplyRequestDTO jobPostingApplyRequestDTO){
+        JobPosting jobPosting = jobPostingRepository.getById(jobPostingApplyRequestDTO.getJobPostingId());
+        Member member = memberRepository.getById(jobPostingApplyRequestDTO.getMemberId());
 
-        Member member = memberRepository.findById(jobPostingApplyRequestDTO.getMemberId())
-                .orElseThrow(() -> new CustomException(ErrorCode.USER_ID_NOT_FOUND));
-
-        if(jobPostingApplicantRepository.existsByJobPostingAndMember(jobPosting, member)){
+        boolean isAlreadyApplied = jobPostingApplicantRepository.existsByJobPostingAndMember(jobPosting, member);
+        if(isAlreadyApplied){
             throw new CustomException(ErrorCode.ALREADY_APPLIED);
         }
 
         jobPostingApplicantRepository.save(jobPostingApplyRequestDTO.toEntity(jobPosting, member));
-        return new JobPostingResponseDTO(SuccesCode.SAVE_SUCCESSFUL.getMessage());
+        return new ResponseMessage(SuccesCode.SAVE_SUCCESSFUL.getMessage());
     }
 }

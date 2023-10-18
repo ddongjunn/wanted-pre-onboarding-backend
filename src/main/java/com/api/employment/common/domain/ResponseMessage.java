@@ -1,10 +1,10 @@
-package com.api.employment.domain.jobposting.model;
+package com.api.employment.common.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class JobPostingResponseDTO {
+public class ResponseMessage {
     private String message;
 }

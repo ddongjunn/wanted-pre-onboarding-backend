@@ -17,7 +17,7 @@ public class JobPostingApplyRequestDTO {
 
     @JsonProperty("사용자_id")
     @NotNull(message = "사용자 id는 필수입니다.")
-    private Long MemberId;
+    private String MemberId;
 
     public JobPostingApplicant toEntity(JobPosting jobPosting, Member member){
         return JobPostingApplicant.builder()
