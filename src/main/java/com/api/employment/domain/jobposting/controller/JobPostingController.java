@@ -29,8 +29,8 @@ public class JobPostingController {
         return ResponseEntity.ok().body(jobPostingService.get(search));
     }
 
-    @GetMapping("detail")
-    public ResponseEntity<?> getJobPostingDetail(@RequestParam final Long id){
+    @GetMapping("detail/{id}")
+    public ResponseEntity<?> getJobPostingDetail(@PathVariable final Long id){
         return ResponseEntity.ok().body(jobPostingService.getDetail(id));
     }
 
@@ -39,8 +39,8 @@ public class JobPostingController {
         return ResponseEntity.ok().body(jobPostingService.update(jobPostingUpdateRequestDTO));
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteJobPosting(@RequestParam final Long id){
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deleteJobPosting(@PathVariable final Long id){
         return ResponseEntity.ok().body(jobPostingService.delete(id));
     }
 
