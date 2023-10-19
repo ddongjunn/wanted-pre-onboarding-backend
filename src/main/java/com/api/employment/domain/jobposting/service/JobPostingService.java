@@ -31,7 +31,7 @@ public class JobPostingService {
 
     @Transactional
     public ResponseMessage save(JobPostingSaveRequestDTO jobPostingSaveRequestDTO){
-        Company company = companyRepository.getById(jobPostingSaveRequestDTO.getCompanyId());
+        Company company = getCompany(jobPostingSaveRequestDTO.getCompanyId());
 
         JobPosting jobPosting = jobPostingSaveRequestDTO.toEntity();
         jobPosting.linkCompany(company);
@@ -87,4 +87,10 @@ public class JobPostingService {
     public List<Long> getOtherJobPostingList(String companyName){
         return jobPostingRepository.findIdJobPostingByCompanyId(companyName);
     }
+
+    public Company getCompany(Long id){
+        return companyRepository.getById(id);
+    }
+
+
 }

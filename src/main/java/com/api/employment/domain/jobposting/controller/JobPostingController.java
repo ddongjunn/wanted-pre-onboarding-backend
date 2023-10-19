@@ -8,6 +8,7 @@ import com.api.employment.domain.jobposting.model.JobPostingUpdateRequestDTO;
 import com.api.employment.domain.jobposting.service.JobPostingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ public class JobPostingController {
 
     @PostMapping
     public ResponseEntity<?> saveJobPosting(@Valid @RequestBody final JobPostingSaveRequestDTO jobPostingSaveRequestDTO){
-        return ResponseEntity.ok().body(jobPostingService.save(jobPostingSaveRequestDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobPostingService.save(jobPostingSaveRequestDTO));
     }
 
     @GetMapping
