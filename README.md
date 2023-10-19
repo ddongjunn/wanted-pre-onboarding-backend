@@ -26,7 +26,7 @@ PATCH /jobs
 ```
 **3. 채용공고를 삭제합니다.**
 ```
-DELETE /jobs?id={채용공고_id}
+DELETE /jobs/{채용공고_id}
 ```
 
 **4. 채용공고 목록을 가져옵니다.**
@@ -83,7 +83,7 @@ GET /jobs?search={회사명, 채용포지션}
 ```
 **6. 채용 상세 페이지를 가져옵니다.**
 ```
-GET /jobs/detail/?id={채용공고_id}
+GET /jobs/detail/{채용공고_id}
 ```
 ```
 {
